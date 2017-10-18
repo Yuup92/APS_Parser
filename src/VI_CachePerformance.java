@@ -1,12 +1,13 @@
-
-public class VI extends Solver {
+public class VI_CachePerformance extends Solver {
 	
 	private double[][] qTable;
 	private double[][] qTablePrev;
+	private double[]   vt;
 	
-	public VI(POMDP mdp) {
+	public VI_CachePerformance(POMDP mdp) {
 		super(mdp);
 		initializeQTable();
+		initializeVt();
 	}
 	
 	public void Solve() {
@@ -18,14 +19,22 @@ public class VI extends Solver {
 		while(delta > 0.01) {
 			delta = 0;
 			count++;
+			//Iterating over each State
 			for(s = 0; s < this.mdp.getNumStates(); s++) {
+				double bellman;
+				//Iterating over each Action
 				for(a = 0; a < this.mdp.getNumActions(); a++) {
 					sum = 0.0;
-					
 					for(sNext = 0; sNext < this.mdp.getNumStates(); sNext++) {
 						sum = sum + this.mdp.getTransitionProbability(s, a, sNext)*getMaxQTablePrev(sNext);
 					}
-					this.qTable[s][a] = this.mdp.getReward(s, a) + this.mdp.getDiscountFactor()*sum;
+					bellman = this.mdp.getReward(s, a) + this.mdp.getDiscountFactor()*sum;
+					this.qTable[s][a] = bellman;
+					
+					//Find the highest reward action
+					if(vt[s] < bellman) {
+						vt[s] = bellman;
+					}
 					delta = getDelta(delta, s, a);
 				}
 			}
@@ -79,5 +88,9 @@ public class VI extends Solver {
 	private void initializeQTable() {
 		this.qTable = new double[this.mdp.getNumStates()][this.mdp.getNumActions()];
 		this.qTablePrev = new double[this.mdp.getNumStates()][this.mdp.getNumActions()];
+	}
+	
+	private void initializeVt() {
+		this.vt = new double[this.mdp.getNumStates()];
 	}
 }
