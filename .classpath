@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/Program/APS_2/lib/antlr-3.2.jar"/>
+	<classpathentry kind="lib" path="D:/Program/APS_2/lib/jmatharray.jar"/>
+	<classpathentry kind="lib" path="D:/Program/APS_2/lib/libpomdp-parser-1.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/Program/APS_2/lib/mtj-0.9.12.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
